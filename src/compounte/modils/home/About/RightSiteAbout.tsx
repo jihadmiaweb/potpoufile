@@ -1,20 +1,34 @@
+import { motion } from "framer-motion";
+
 function RightSiteAbout() {
     return (
-        <div className="px-5 md:px-12">
+        <div className="px-5 md:px-12 py-20">
             {/* Heading */}
-            <div className="text-2xl sm:text-3xl md:text-4xl font-extrabold 
+            <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7 }}
+                viewport={{ once: true, amount: 0.3 }}
+                className="text-3xl sm:text-4xl md:text-5xl font-extrabold 
                   bg-gradient-to-r from-indigo-500 via-pink-500 to-yellow-400 
-                  bg-clip-text text-transparent pb-3 pt-28">
-                <h1 className="pb-2">LET’S</h1>
+                  bg-clip-text text-transparent mb-6"
+            >
+                <h1>LET’S</h1>
                 <span>INTRODUCE ABOUT</span>
-                <h2 className="pb-2 pt-2">MYSELF</h2>
-            </div>
+                <h2 className="pt-2">MYSELF</h2>
+            </motion.div>
 
             {/* Paragraph */}
-            <div className="text-blue-800 leading-7 w-full md:w-[500px]">
+            <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.9 }}
+                viewport={{ once: true, amount: 0.2 }}
+                className="text-blue-800 leading-7 w-full md:w-[520px]"
+            >
                 <p className="pb-3">
                     Whose given. Were gathered. There first subdue greater. Bearing you
-                    Whales heaven midst their. Beast creepeth. days.
+                    whales heaven midst their. Beast creepeth days.
                 </p>
                 <span>
                     Is give may shall likeness made yielding spirit a itself together created
@@ -22,19 +36,24 @@ function RightSiteAbout() {
                     gathered cattle let. Creature whales fruit unto meat the life beginning
                     all in under give two.
                 </span>
-            </div>
+            </motion.div>
 
             {/* Button */}
-            <div className="pt-6">
-                <button className="px-5 md:px-6 py-2 md:py-3 font-semibold rounded-lg text-white 
+            <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+                className="pt-8"
+            >
+                <button className="px-6 md:px-8 py-3 md:py-4 font-semibold rounded-lg text-white 
                        bg-gradient-to-r from-blue-500 to-purple-500 
                        hover:from-pink-500 hover:to-yellow-500
-                       transition-all duration-500 shadow-lg">
+                       transition-all duration-500 shadow-lg hover:shadow-xl">
                     DOWNLOAD CV
                 </button>
-            </div>
+            </motion.div>
         </div>
-
     );
 }
 
