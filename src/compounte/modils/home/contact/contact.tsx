@@ -8,9 +8,9 @@ function GradientButton({ children, ...props }) {
         <button
             {...props}
             className="px-6 py-3 font-semibold rounded-lg text-white 
-      bg-gradient-to-r from-blue-400 to-green-500
-      hover:from-green-500 hover:to-teal-400
-      transition-all duration-500 shadow-lg"
+            bg-gradient-to-r from-blue-400 to-green-500
+            hover:from-green-500 hover:to-teal-400
+            transition-all duration-500 shadow-lg"
         >
             {children}
         </button>
@@ -61,9 +61,15 @@ function Contact() {
     };
 
     return (
-        <div
+        <motion.div
             className="min-h-screen w-full px-5 md:px-12 py-16 relative
-      bg-gradient-to-b from-gray-900 via-gray-800 to-black"
+            bg-gradient-to-b from-gray-900 via-gray-800 to-black"
+
+            /** 👇 Entire Section Animation */
+            initial={{ opacity: 0, y: 80 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
         >
             {/* Title */}
             <div className="text-center pb-10">
@@ -82,10 +88,11 @@ function Contact() {
                 <motion.form
                     onSubmit={handleSubmit}
                     className="border border-gray-600 p-6 rounded-2xl bg-black/40 backdrop-blur-sm"
-                    initial={{ opacity: 0, y: 50 }}
+                    /** 👇 Comes from bottom */
+                    initial={{ opacity: 0, y: 60 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.5 }}
-                    transition={{ duration: 0.6 }}
+                    viewport={{ once: true, amount: 0.4 }}
+                    transition={{ duration: 0.7, ease: "easeOut" }}
                 >
                     <p className="text-gray-300 font-bold mb-6">
                         If you have any questions or concerns, feel free to reach out. I’m
@@ -104,9 +111,9 @@ function Contact() {
                             value={formData.name}
                             onChange={handleChange}
                             className="w-full p-2 rounded-md border border-gray-400 
-              text-white bg-transparent outline-none 
-              focus:border-blue-400 hover:border-blue-300 
-              transition-all duration-200"
+                            text-white bg-transparent outline-none 
+                            focus:border-blue-400 hover:border-blue-300 
+                            transition-all duration-200"
                         />
                     </div>
 
@@ -121,9 +128,9 @@ function Contact() {
                             value={formData.email}
                             onChange={handleChange}
                             className="w-full p-2 rounded-md border border-gray-400 
-              text-white bg-transparent outline-none 
-              focus:border-blue-400 hover:border-blue-300 
-              transition-all duration-200"
+                            text-white bg-transparent outline-none 
+                            focus:border-blue-400 hover:border-blue-300 
+                            transition-all duration-200"
                         />
                     </div>
 
@@ -137,9 +144,9 @@ function Contact() {
                             value={formData.message}
                             onChange={handleChange}
                             className="w-full h-32 p-2 rounded-md border border-gray-400 
-              text-white bg-transparent outline-none 
-              focus:border-blue-400 hover:border-blue-300 
-              transition-all duration-200"
+                            text-white bg-transparent outline-none 
+                            focus:border-blue-400 hover:border-blue-300 
+                            transition-all duration-200"
                         />
                     </div>
 
@@ -162,10 +169,11 @@ function Contact() {
                 {/* Contact Info */}
                 <motion.div
                     className="text-white flex flex-col justify-center pl-0 md:pl-20"
-                    initial={{ opacity: 0, x: 100 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, amount: 0.5 }}
-                    transition={{ duration: 0.6 }}
+                    /** 👇 Comes from top */
+                    initial={{ opacity: 0, y: -60 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.4 }}
+                    transition={{ duration: 0.7, ease: "easeOut" }}
                 >
                     <div className="space-y-4 text-[18px] font-bold">
                         <div className="flex items-center space-x-3">
@@ -205,8 +213,8 @@ function Contact() {
                 <motion.button
                     onClick={scrollToTop}
                     className="fixed bottom-8 right-8 p-4 rounded-full 
-          bg-gradient-to-r from-blue-500 to-green-400 
-          text-white shadow-lg"
+                    bg-gradient-to-r from-blue-500 to-green-400 
+                    text-white shadow-lg"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     whileHover={{ scale: 1.2, rotate: 10 }}
@@ -215,7 +223,7 @@ function Contact() {
                     <FaArrowUp className="text-2xl" />
                 </motion.button>
             )}
-        </div>
+        </motion.div>
     );
 }
 
