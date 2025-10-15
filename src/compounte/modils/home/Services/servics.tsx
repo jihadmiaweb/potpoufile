@@ -1,4 +1,5 @@
 import { FaWordpress, FaPaintBrush, FaSearch, FaMobileAlt } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 function Services() {
     const services = [
@@ -41,16 +42,20 @@ function Services() {
             <section className="py-16 bg-gray-50">
                 <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 justify-items-center">
                     {services.map((service, idx) => (
-                        <div
+                        <motion.div
                             key={idx}
                             className="w-full max-w-[250px] p-6 flex flex-col items-center text-center rounded-xl shadow-lg 
                 transition-transform duration-300 hover:shadow-2xl 
                 hover:bg-gradient-to-r hover:from-blue-400 hover:via-purple-400 hover:to-pink-400 hover:text-white"
+                            initial={{ opacity: 0, y: 50 }} // Start slightly below
+                            whileInView={{ opacity: 1, y: 0 }} // Animate to original position
+                            viewport={{ once: true, amount: 0.5 }}
+                            transition={{ duration: 0.6, delay: idx * 0.1 }} // stagger effect
                         >
-                            <div className="mb-4 mt-4">{service.icon}</div>
+                            <div className="mb-4 mt-4" role="img" aria-label={service.title}>{service.icon}</div>
                             <h2 className="text-xl font-bold mb-2">{service.title}</h2>
                             <p className="text-sm">{service.desc}</p>
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
             </section>
