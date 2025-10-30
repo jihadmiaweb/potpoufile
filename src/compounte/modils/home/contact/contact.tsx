@@ -70,7 +70,7 @@ function Contact() {
     return (
         <motion.div
             className="min-h-screen w-full px-5 md:px-12 py-16 relative
-            bg-gradient-to-b from-gray-900 via-gray-800 to-black"
+            "
             initial={{ opacity: 0, y: 80 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
@@ -92,13 +92,13 @@ function Contact() {
                 {/* Contact Form */}
                 <motion.form
                     onSubmit={handleSubmit}
-                    className="border border-gray-600 p-6 rounded-2xl bg-black/40 backdrop-blur-sm"
+                    className="border border-gray-600 p-6 rounded-2xl  backdrop-blur-sm"
                     initial={{ opacity: 0, y: 60 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.4 }}
                     transition={{ duration: 0.7, ease: "easeOut" }}
                 >
-                    <p className="text-gray-300 font-bold mb-6">
+                    <p className="text-gray-400 font-bold mb-6">
                         If you have any questions or concerns, feel free to reach out. I’m
                         open to collaborations or any work opportunities that align with my
                         skills and interests.
@@ -181,15 +181,15 @@ function Contact() {
                     <div className="space-y-4 text-[18px] font-bold">
                         <div className="flex items-center space-x-3">
                             <i className="fa-solid fa-envelope text-rose-400 text-2xl" aria-label="email"></i>
-                            <span className="text-gray-200">mdyacinsorkar17@gmail.com</span>
+                            <span className="text-gray-400">mdyacinsorkar17@gmail.com</span>
                         </div>
                         <div className="flex items-center space-x-3">
                             <i className="fa-solid fa-phone text-emerald-500 text-2xl" aria-label="phone"></i>
-                            <span className="text-gray-200">+8801789461747</span>
+                            <span className="text-gray-400">+8801789461747</span>
                         </div>
                         <div className="flex items-center space-x-3">
                             <i className="fa-solid fa-location-dot text-rose-400 text-2xl" aria-label="location"></i>
-                            <span className="text-gray-200">Dhaka, Bangladesh</span>
+                            <span className="text-gray-400">Dhaka, Bangladesh</span>
                         </div>
                     </div>
 

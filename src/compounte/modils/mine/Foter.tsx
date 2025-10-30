@@ -2,6 +2,7 @@ import { FaGithub } from "react-icons/fa6";
 import { FaFacebook } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { FaInstagramSquare } from "react-icons/fa";
+import { Link } from "react-router";
 
 
 export default function Footer() {
@@ -24,10 +25,10 @@ export default function Footer() {
                 <div>
                     <h2 className="text-lg font-bold text-white mb-4">Quick Links</h2>
                     <ul className="space-y-2 text-sm">
-                        <li><a href="#about" className="hover:text-blue-400 transition">About</a></li>
-                        <li><a href="#portfolio" className="hover:text-blue-400 transition">Portfolio</a></li>
-                        <li><a href="#services" className="hover:text-blue-400 transition">Services</a></li>
-                        <li><a href="#contact" className="hover:text-blue-400 transition">Contact</a></li>
+                        <li><Link to="/about" className="hover:text-blue-400 transition">About</Link></li>
+                        <li><Link to="/portfolio" className="hover:text-blue-400 transition">Portfolio</Link></li>
+                        <li><Link to="/services" className="hover:text-blue-400 transition">Services</Link></li>
+                        <li><Link to="/contact" className="hover:text-blue-400 transition">Contact</Link></li>
                     </ul>
                 </div>
 
