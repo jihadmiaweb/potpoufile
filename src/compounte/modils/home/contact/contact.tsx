@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, type ChangeEvent, type FormEvent, } from "react";
 import { FaArrowUp } from "react-icons/fa";
 import { motion } from "framer-motion";
 
 /** 🌈 Reusable Gradient Button */
-function GradientButton({ children, ...props }) {
+function GradientButton({ children, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
     return (
         <button
             {...props}
@@ -17,16 +17,24 @@ function GradientButton({ children, ...props }) {
     );
 }
 
+
+/** 🌍 Form Data Type */
+interface FormData {
+    name: string;
+    email: string;
+    message: string;
+}
+
 function Contact() {
-    const [showTopBtn, setShowTopBtn] = useState(false);
-    const [formData, setFormData] = useState({
+    const [showTopBtn, setShowTopBtn] = useState<boolean>(false);
+    const [formData, setFormData] = useState<FormData>({
         name: "",
         email: "",
         message: "",
     });
-    const [success, setSuccess] = useState(false);
+    const [success, setSuccess] = useState<boolean>(false);
 
-    /** 🌍 Scroll Listener (Throttled) */
+    /** 🌍 Scroll Listener */
     useEffect(() => {
         const handleScroll = () => setShowTopBtn(window.scrollY > 300);
         const throttled = () => requestAnimationFrame(handleScroll);
@@ -40,11 +48,11 @@ function Contact() {
     };
 
     /** 📨 Form Handlers */
-    const handleChange = (e) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormData({ ...formData, [e.target.id]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const { name, email, message } = formData;
         if (!name || !email || !message) {
@@ -56,7 +64,6 @@ function Contact() {
         setFormData({ name: "", email: "", message: "" });
         setSuccess(true);
 
-        // Hide success message after 3 seconds
         setTimeout(() => setSuccess(false), 3000);
     };
 
@@ -64,8 +71,6 @@ function Contact() {
         <motion.div
             className="min-h-screen w-full px-5 md:px-12 py-16 relative
             bg-gradient-to-b from-gray-900 via-gray-800 to-black"
-
-            /** 👇 Entire Section Animation */
             initial={{ opacity: 0, y: 80 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
@@ -88,7 +93,6 @@ function Contact() {
                 <motion.form
                     onSubmit={handleSubmit}
                     className="border border-gray-600 p-6 rounded-2xl bg-black/40 backdrop-blur-sm"
-                    /** 👇 Comes from bottom */
                     initial={{ opacity: 0, y: 60 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.4 }}
@@ -169,7 +173,6 @@ function Contact() {
                 {/* Contact Info */}
                 <motion.div
                     className="text-white flex flex-col justify-center pl-0 md:pl-20"
-                    /** 👇 Comes from top */
                     initial={{ opacity: 0, y: -60 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.4 }}
