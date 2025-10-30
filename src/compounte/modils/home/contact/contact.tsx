@@ -181,7 +181,7 @@ function Contact() {
                     <div className="space-y-4 text-[18px] font-bold">
                         <div className="flex items-center space-x-3">
                             <i className="fa-solid fa-envelope text-rose-400 text-2xl" aria-label="email"></i>
-                            <span className="text-gray-400">mdyacinsorkar17@gmail.com</span>
+                            <span className="text-gray-400">jihadmiaweb@gmail.com</span>
                         </div>
                         <div className="flex items-center space-x-3">
                             <i className="fa-solid fa-phone text-emerald-500 text-2xl" aria-label="phone"></i>
