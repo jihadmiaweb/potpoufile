@@ -193,7 +193,7 @@ function Contact() {
                         </div>
                     </div>
 
-                    {/* Social Links */}
+                    {/* Social Linksaa */}
                     <div className="flex space-x-4 pt-6 text-3xl">
                         <a href="https://github.com/" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                             <i className="fa-brands fa-github text-fuchsia-800 hover:text-yellow-500 hover:scale-125 transition"></i>
