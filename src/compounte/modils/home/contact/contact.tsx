@@ -231,8 +231,8 @@ function Contact() {
                     {/* Contact Info */}
                     <motion.div
                         className="p-8 bg-gray-800 rounded-2xl shadow-2xl border border-gray-700 flex flex-col justify-center"
-                        initial={{ opacity: 0, x: 60 }} // Initial animation adjusted for right column
-                        whileInView={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0, y: 60 }} // Initial animation adjusted for right column
+                        whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, amount: 0.4 }}
                         transition={{ duration: 0.7, ease: "easeOut" }}
                     >
