@@ -1,22 +1,24 @@
-import { useState, useEffect, type ChangeEvent, type FormEvent, } from "react";
-import { FaArrowUp } from "react-icons/fa";
+import { useState, useEffect, type ChangeEvent, type FormEvent } from "react";
+import { FaArrowUp, FaEnvelope, FaPhoneAlt, FaMapMarkerAlt, FaGithub, FaFacebook, FaLinkedin, FaTelegram } from "react-icons/fa"; // 1. Use react-icons for contact info
 import { motion } from "framer-motion";
 
-/** 🌈 Reusable Gradient Button */
+/** 🌈 Reusable Gradient Button (Tailwind improvements) */
 function GradientButton({ children, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
     return (
         <button
             {...props}
-            className="px-6 py-3 font-semibold rounded-lg text-white 
-            bg-gradient-to-r from-blue-400 to-green-500
-            hover:from-green-500 hover:to-teal-400
-            transition-all duration-500 shadow-lg"
+            className="px-8 py-3 font-semibold rounded-lg text-white 
+            bg-gradient-to-r from-blue-500 to-green-500
+            hover:from-green-500 hover:to-teal-500
+            transition-all duration-500 shadow-xl shadow-blue-500/50 hover:shadow-green-500/50
+            focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" // Added focus ring
         >
             {children}
         </button>
     );
 }
 
+// --- Component Props and Data Types ---
 
 /** 🌍 Form Data Type */
 interface FormData {
@@ -24,6 +26,22 @@ interface FormData {
     email: string;
     message: string;
 }
+
+/** 🌐 Contact Info Data */
+const CONTACT_INFO = [
+    { icon: FaEnvelope, text: "jihadmiaweb@gmail.com", color: "text-rose-500", label: "Email" },
+    { icon: FaPhoneAlt, text: "+8801789461747", color: "text-emerald-500", label: "Phone" },
+    { icon: FaMapMarkerAlt, text: "Dhaka, Bangladesh", color: "text-rose-500", label: "Location" },
+];
+
+/** 🔗 Social Links Data */
+const SOCIAL_LINKS = [
+    { icon: FaGithub, href: "https://github.com/", color: "text-gray-400", hoverColor: "hover:text-fuchsia-400", label: "GitHub" },
+    { icon: FaFacebook, href: "https://facebook.com/", color: "text-cyan-500", hoverColor: "hover:text-yellow-400", label: "Facebook" },
+    { icon: FaLinkedin, href: "https://linkedin.com/", color: "text-blue-500", hoverColor: "hover:text-emerald-400", label: "LinkedIn" },
+    { icon: FaTelegram, href: "https://t.me/", color: "text-sky-500", hoverColor: "hover:text-rose-400", label: "Telegram" },
+];
+
 
 function Contact() {
     const [showTopBtn, setShowTopBtn] = useState<boolean>(false);
@@ -33,10 +51,14 @@ function Contact() {
         message: "",
     });
     const [success, setSuccess] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null); // State for displaying validation errors
 
-    /** 🌍 Scroll Listener */
+    // --- Effects & Handlers ---
+
+    /** 🌍 Scroll Listener (No change needed, it's efficient) */
     useEffect(() => {
         const handleScroll = () => setShowTopBtn(window.scrollY > 300);
+        // Using requestAnimationFrame for performance (throttled)
         const throttled = () => requestAnimationFrame(handleScroll);
         window.addEventListener("scroll", throttled);
         return () => window.removeEventListener("scroll", throttled);
@@ -47,169 +69,209 @@ function Contact() {
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
-    /** 📨 Form Handlers */
+    /** 📨 Form Change Handler */
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setError(null); // Clear previous errors on change
         setFormData({ ...formData, [e.target.id]: e.target.value });
     };
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    /** 🚀 Form Submission Handler */
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setError(null);
+
         const { name, email, message } = formData;
+
+        // Basic Validation
         if (!name || !email || !message) {
-            alert("⚠️ Please fill out all fields.");
+            setError("⚠️ Please fill out all fields.");
             return;
         }
 
-        console.log("✅ Form Submitted:", formData);
-        setFormData({ name: "", email: "", message: "" });
-        setSuccess(true);
+        // Email Validation (Simple regex)
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            setError("📧 Please enter a valid email address.");
+            return;
+        }
 
-        setTimeout(() => setSuccess(false), 3000);
+        // --- Simulated API Call ---
+        console.log("Submitting form data:", formData);
+
+        try {
+            // Simulate network delay and successful submission
+            // await new Promise(resolve => setTimeout(resolve, 1000));
+
+            console.log("✅ Form Submitted Successfully!");
+            setFormData({ name: "", email: "", message: "" });
+            setSuccess(true);
+            setTimeout(() => setSuccess(false), 4000); // 4 seconds duration
+
+        } catch (submitError) {
+            console.error("Submission failed:", submitError);
+            setError("❌ Message failed to send. Please try again later.");
+        }
     };
 
+    // --- JSX Render ---
     return (
-        <motion.div
-            className="min-h-screen w-full px-5 md:px-12 py-16 relative
-            "
-            initial={{ opacity: 0, y: 80 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+        // 3. Use <section> for semantic structure
+        <section
+            id="contact"
+            className="w-full px-5 md:px-12 py-20 relative text-white min-h-screen" // 4. Enforce dark background for the whole section
         >
-            {/* Title */}
-            <div className="text-center pb-10">
-                <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ duration: 0.6, ease: "easeOut" }}
-                >
-                    <GradientButton>CONTACT</GradientButton>
-                </motion.div>
-            </div>
+            <motion.div
+                initial={{ opacity: 0, y: 80 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+                {/* Title */}
+                <header className="text-center pb-12">
+                    <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ duration: 0.6, ease: "easeOut" }}
+                    >
+                        <GradientButton className="text-xl">CONTACT ME</GradientButton>
+                    </motion.div>
+                </header>
 
-            {/* Grid Layout */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Contact Form */}
-                <motion.form
-                    onSubmit={handleSubmit}
-                    className="border border-gray-600 p-6 rounded-2xl  backdrop-blur-sm"
-                    initial={{ opacity: 0, y: 60 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.4 }}
-                    transition={{ duration: 0.7, ease: "easeOut" }}
-                >
-                    <p className="text-gray-400 font-bold mb-6">
-                        If you have any questions or concerns, feel free to reach out. I’m
-                        open to collaborations or any work opportunities that align with my
-                        skills and interests.
-                    </p>
+                {/* Grid Layout */}
+                <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    {/* Contact Form */}
+                    <motion.form
+                        onSubmit={handleSubmit}
+                        className="bg-gray-800 p-8 rounded-2xl shadow-2xl border border-gray-700" // Refined dark theme styling
+                        initial={{ opacity: 0, x: -60 }} // Initial animation adjusted for left column
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, amount: 0.4 }}
+                        transition={{ duration: 0.7, ease: "easeOut" }}
+                    >
+                        <p className="text-gray-300 font-medium mb-6">
+                            If you have any questions or concerns, feel free to reach out. I’m open to collaborations or any work opportunities that align with my skills and interests.
+                        </p>
 
-                    {/* Name */}
-                    <div className="mb-4">
-                        <label htmlFor="name" className="block text-white text-sm mb-2">
-                            Your Name:
-                        </label>
-                        <input
-                            id="name"
-                            type="text"
-                            value={formData.name}
-                            onChange={handleChange}
-                            className="w-full p-2 rounded-md border border-gray-400 
-                            text-white bg-transparent outline-none 
-                            focus:border-blue-400 hover:border-blue-300 
-                            transition-all duration-200"
-                        />
-                    </div>
+                        <div className="space-y-6">
+                            {/* Name */}
+                            <div className="relative">
+                                <label htmlFor="name" className="block text-gray-300 text-sm mb-2 font-semibold">
+                                    Your Name:
+                                </label>
+                                <input
+                                    id="name"
+                                    type="text"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    className="w-full p-3 rounded-lg border border-gray-600 
+                                    text-white bg-gray-700 placeholder-gray-500 
+                                    focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none 
+                                    transition-all duration-300"
+                                    required
+                                    aria-invalid={error && formData.name === "" ? "true" : "false"}
+                                />
+                            </div>
 
-                    {/* Email */}
-                    <div className="mb-4">
-                        <label htmlFor="email" className="block text-white text-sm mb-2">
-                            Your Email:
-                        </label>
-                        <input
-                            id="email"
-                            type="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            className="w-full p-2 rounded-md border border-gray-400 
-                            text-white bg-transparent outline-none 
-                            focus:border-blue-400 hover:border-blue-300 
-                            transition-all duration-200"
-                        />
-                    </div>
+                            {/* Email */}
+                            <div className="relative">
+                                <label htmlFor="email" className="block text-gray-300 text-sm mb-2 font-semibold">
+                                    Your Email:
+                                </label>
+                                <input
+                                    id="email"
+                                    type="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    className="w-full p-3 rounded-lg border border-gray-600 
+                                    text-white bg-gray-700 placeholder-gray-500 
+                                    focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none 
+                                    transition-all duration-300"
+                                    required
+                                    aria-invalid={error && formData.email === "" ? "true" : "false"}
+                                />
+                            </div>
 
-                    {/* Message */}
-                    <div className="mb-4">
-                        <label htmlFor="message" className="block text-white text-sm mb-2">
-                            Your Message:
-                        </label>
-                        <textarea
-                            id="message"
-                            value={formData.message}
-                            onChange={handleChange}
-                            className="w-full h-32 p-2 rounded-md border border-gray-400 
-                            text-white bg-transparent outline-none 
-                            focus:border-blue-400 hover:border-blue-300 
-                            transition-all duration-200"
-                        />
-                    </div>
-
-                    <div className="text-center">
-                        <GradientButton type="submit">SEND MESSAGE</GradientButton>
-                    </div>
-
-                    {success && (
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 0.5 }}
-                            className="text-green-400 text-center mt-4 font-semibold"
-                        >
-                            ✅ Message sent successfully!
-                        </motion.div>
-                    )}
-                </motion.form>
-
-                {/* Contact Info */}
-                <motion.div
-                    className="text-white flex flex-col justify-center pl-0 md:pl-20"
-                    initial={{ opacity: 0, y: -60 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.4 }}
-                    transition={{ duration: 0.7, ease: "easeOut" }}
-                >
-                    <div className="space-y-4 text-[18px] font-bold">
-                        <div className="flex items-center space-x-3">
-                            <i className="fa-solid fa-envelope text-rose-400 text-2xl" aria-label="email"></i>
-                            <span className="text-gray-400">jihadmiaweb@gmail.com</span>
+                            {/* Message */}
+                            <div className="relative">
+                                <label htmlFor="message" className="block text-gray-300 text-sm mb-2 font-semibold">
+                                    Your Message:
+                                </label>
+                                <textarea
+                                    id="message"
+                                    value={formData.message}
+                                    onChange={handleChange}
+                                    className="w-full h-32 p-3 rounded-lg border border-gray-600 
+                                    text-white bg-gray-700 placeholder-gray-500 
+                                    focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none 
+                                    transition-all duration-300 resize-none" // 5. Added resize-none
+                                    required
+                                    aria-invalid={error && formData.message === "" ? "true" : "false"}
+                                />
+                            </div>
                         </div>
-                        <div className="flex items-center space-x-3">
-                            <i className="fa-solid fa-phone text-emerald-500 text-2xl" aria-label="phone"></i>
-                            <span className="text-gray-400">+8801789461747</span>
-                        </div>
-                        <div className="flex items-center space-x-3">
-                            <i className="fa-solid fa-location-dot text-rose-400 text-2xl" aria-label="location"></i>
-                            <span className="text-gray-400">Dhaka, Bangladesh</span>
-                        </div>
-                    </div>
 
-                    {/* Social Linksaa */}
-                    <div className="flex space-x-4 pt-6 text-3xl">
-                        <a href="https://github.com/" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-                            <i className="fa-brands fa-github text-fuchsia-800 hover:text-yellow-500 hover:scale-125 transition"></i>
-                        </a>
-                        <a href="https://facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                            <i className="fa-brands fa-facebook text-cyan-700 hover:text-yellow-500 hover:scale-125 transition"></i>
-                        </a>
-                        <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                            <i className="fa-brands fa-linkedin text-rose-400 hover:text-emerald-500 hover:scale-125 transition"></i>
-                        </a>
-                        <a href="https://t.me/" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
-                            <i className="fa-brands fa-telegram text-gray-500 hover:text-fuchsia-700 hover:scale-125 transition"></i>
-                        </a>
-                    </div>
-                </motion.div>
-            </div>
+                        {/* Submission Status */}
+                        {(success || error) && (
+                            <motion.div
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5 }}
+                                className={`text-center mt-6 font-semibold p-3 rounded-lg ${success ? 'bg-green-800/30 text-green-400' : 'bg-red-800/30 text-red-400'}`}
+                                role="alert" // Accessibility role for dynamic feedback
+                            >
+                                {success ? "✅ Message sent successfully! I'll be in touch shortly." : error}
+                            </motion.div>
+                        )}
+
+                        <div className="text-center pt-6">
+                            <GradientButton type="submit">SEND MESSAGE</GradientButton>
+                        </div>
+                    </motion.form>
+
+                    {/* Contact Info */}
+                    <motion.div
+                        className="p-8 bg-gray-800 rounded-2xl shadow-2xl border border-gray-700 flex flex-col justify-center"
+                        initial={{ opacity: 0, x: 60 }} // Initial animation adjusted for right column
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, amount: 0.4 }}
+                        transition={{ duration: 0.7, ease: "easeOut" }}
+                    >
+                        <h2 className="text-2xl font-bold mb-8 text-gray-200">Get In Touch</h2>
+
+                        {/* Info List */}
+                        <div className="space-y-8">
+                            {CONTACT_INFO.map((item, index) => (
+                                <div key={index} className="flex items-start space-x-4">
+                                    <item.icon className={`text-3xl ${item.color} flex-shrink-0 mt-1`} aria-hidden="true" />
+                                    <div role="group" aria-label={item.label}>
+                                        <p className="text-sm text-gray-400 font-medium">{item.label}</p>
+                                        <p className="text-lg text-white font-semibold break-words">{item.text}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Social Links */}
+                        <div className="pt-10">
+                            <h3 className="text-xl font-bold mb-4 text-gray-200">Connect with Me</h3>
+                            <div className="flex space-x-5 text-3xl">
+                                {SOCIAL_LINKS.map((link, index) => (
+                                    <a
+                                        key={index}
+                                        href={link.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        aria-label={link.label}
+                                        className={`${link.color} ${link.hoverColor} hover:scale-125 transition duration-300`}
+                                    >
+                                        <link.icon aria-hidden="true" />
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
+                    </motion.div>
+                </div>
+            </motion.div>
 
             {/* 🚀 Scroll-to-Top Button */}
             {showTopBtn && (
@@ -217,16 +279,17 @@ function Contact() {
                     onClick={scrollToTop}
                     className="fixed bottom-8 right-8 p-4 rounded-full 
                     bg-gradient-to-r from-blue-500 to-green-400 
-                    text-white shadow-lg"
+                    text-white shadow-xl z-50 focus:outline-none focus:ring-4 focus:ring-green-400/50"
+                    aria-label="Scroll to top"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    whileHover={{ scale: 1.2, rotate: 10 }}
+                    whileHover={{ scale: 1.1, rotate: 10 }} // Reduced scale slightly for better feel
                     transition={{ duration: 0.3 }}
                 >
                     <FaArrowUp className="text-2xl" />
                 </motion.button>
             )}
-        </motion.div>
+        </section>
     );
 }
 
