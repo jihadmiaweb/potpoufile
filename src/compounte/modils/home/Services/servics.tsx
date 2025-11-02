@@ -197,10 +197,7 @@ function Services() {
             </section>
 
             {/* Footer Placeholder */}
-            <footer id="contact" className="py-8 bg-white dark:bg-gray-800 text-center text-gray-600 dark:text-gray-400">
-                <p>&copy; {new Date().getFullYear()} DevStudio. All rights reserved.</p>
-                <p className="text-sm mt-2">Built with React, Tailwind CSS, and Framer Motion.</p>
-            </footer>
+
         </div>
     );
 }
