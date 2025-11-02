@@ -3,15 +3,16 @@ import { FaArrowUp, FaEnvelope, FaPhoneAlt, FaMapMarkerAlt, FaGithub, FaFacebook
 import { motion } from "framer-motion";
 
 /** 🌈 Reusable Gradient Button (Tailwind improvements) */
-function GradientButton({ children, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+function GradientButton({ children, className = "", ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
     return (
         <button
             {...props}
-            className="px-8 py-3 font-semibold rounded-lg text-white 
-            bg-gradient-to-r from-blue-500 to-green-500
-            hover:from-green-500 hover:to-teal-500
-            transition-all duration-500 shadow-xl shadow-blue-500/50 hover:shadow-green-500/50
-            focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" // Added focus ring
+            // Merged with existing class names for flexibility
+            className={`px-8 py-3 font-semibold rounded-lg text-white 
+ bg-gradient-to-r from-blue-500 to-green-500
+ hover:from-green-500 hover:to-teal-500
+ transition-all duration-500 shadow-xl shadow-blue-500/50 hover:shadow-green-500/50
+ focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${className}`} // Added focus ring and merge existing class
         >
             {children}
         </button>
@@ -116,9 +117,10 @@ function Contact() {
     // --- JSX Render ---
     return (
         // 3. Use <section> for semantic structure
+        // IMPROVEMENT: Added a dark background and text-gray-50 to ensure content is visible if parent doesn't provide background
         <section
             id="contact"
-            className="w-full px-5 md:px-12 py-20 relative text-white min-h-screen" // 4. Enforce dark background for the whole section
+            className="w-full px-5 md:px-12 py-16 md:py-20 relative text-white min-h-screen bg-gray-900" // Added bg-gray-900, adjusted padding
         >
             <motion.div
                 initial={{ opacity: 0, y: 80 }}
@@ -130,19 +132,21 @@ function Contact() {
                 <header className="text-center pb-12">
                     <motion.div
                         initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
+                        whileInView={{ scale: 1 }} // Changed to whileInView for the button animation
+                        viewport={{ once: true, amount: 0.3 }}
                         transition={{ duration: 0.6, ease: "easeOut" }}
                     >
-                        <GradientButton className="text-xl">CONTACT ME</GradientButton>
+
+                        <GradientButton className="text-lg sm:text-xl">CONTACT ME</GradientButton>
                     </motion.div>
                 </header>
 
-                {/* Grid Layout */}
+                {/* Grid Layout: Stays responsive with lg:grid-cols-2 */}
                 <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
                     {/* Contact Form */}
                     <motion.form
                         onSubmit={handleSubmit}
-                        className="bg-gray-800 p-8 rounded-2xl shadow-2xl border border-gray-700" // Refined dark theme styling
+                        className="bg-gray-800 p-6 sm:p-8 rounded-2xl shadow-2xl border border-gray-700" // Refined dark theme styling, mobile padding fix
                         initial={{ opacity: 0, x: -60 }} // Initial animation adjusted for left column
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true, amount: 0.4 }}
@@ -164,11 +168,12 @@ function Contact() {
                                     value={formData.name}
                                     onChange={handleChange}
                                     className="w-full p-3 rounded-lg border border-gray-600 
-                                    text-white bg-gray-700 placeholder-gray-500 
-                                    focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none 
-                                    transition-all duration-300"
+                                    text-white bg-gray-700 placeholder-gray-500 
+                                    focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none 
+                                    transition-all duration-300"
                                     required
                                     aria-invalid={error && formData.name === "" ? "true" : "false"}
+                                    placeholder="Enter your full name" // Added placeholder for usability
                                 />
                             </div>
 
@@ -183,11 +188,12 @@ function Contact() {
                                     value={formData.email}
                                     onChange={handleChange}
                                     className="w-full p-3 rounded-lg border border-gray-600 
-                                    text-white bg-gray-700 placeholder-gray-500 
-                                    focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none 
-                                    transition-all duration-300"
+                                    text-white bg-gray-700 placeholder-gray-500 
+                                    focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none 
+                                    transition-all duration-300"
                                     required
                                     aria-invalid={error && formData.email === "" ? "true" : "false"}
+                                    placeholder="your.email@example.com" // Added placeholder for usability
                                 />
                             </div>
 
@@ -201,11 +207,12 @@ function Contact() {
                                     value={formData.message}
                                     onChange={handleChange}
                                     className="w-full h-32 p-3 rounded-lg border border-gray-600 
-                                    text-white bg-gray-700 placeholder-gray-500 
-                                    focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none 
-                                    transition-all duration-300 resize-none" // 5. Added resize-none
+                                    text-white bg-gray-700 placeholder-gray-500 
+                                    focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none 
+                                    transition-all duration-300 resize-none" // 5. Added resize-none
                                     required
                                     aria-invalid={error && formData.message === "" ? "true" : "false"}
+                                    placeholder="I'd like to discuss a project..." // Added placeholder for usability
                                 />
                             </div>
                         </div>
@@ -230,24 +237,35 @@ function Contact() {
 
                     {/* Contact Info */}
                     <motion.div
-                        className="p-8 bg-gray-800 rounded-2xl shadow-2xl border border-gray-700 flex flex-col justify-center"
+                        className="p-6 sm:p-8 bg-gray-800 rounded-2xl shadow-2xl border border-gray-700 flex flex-col justify-center" // Mobile padding fix
                         initial={{ opacity: 0, y: 60 }} // Initial animation adjusted for right column
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, amount: 0.4 }}
                         transition={{ duration: 0.7, ease: "easeOut" }}
                     >
-                        <h2 className="text-2xl font-bold mb-8 text-gray-200">Get In Touch</h2>
+                        <h3 className="text-2xl font-bold mb-8 text-gray-200">Get In Touch</h3>
 
                         {/* Info List */}
                         <div className="space-y-8">
                             {CONTACT_INFO.map((item, index) => (
-                                <div key={index} className="flex items-start space-x-4">
+                                // IMPROVEMENT: Added dynamic hrefs for click-to-call/email
+                                <a
+                                    key={index}
+                                    href={
+                                        item.label === 'Email' ? `mailto:${item.text}` :
+                                            item.label === 'Phone' ? `tel:${item.text.replace(/\s/g, '')}` :
+                                                '#'
+                                    }
+                                    className="flex items-start space-x-4 hover:bg-gray-700/50 p-2 -m-2 rounded-lg transition duration-300"
+                                    target={item.label !== 'Location' ? "_blank" : "_self"} // Open email/phone in new tab
+                                    rel="noopener noreferrer"
+                                >
                                     <item.icon className={`text-3xl ${item.color} flex-shrink-0 mt-1`} aria-hidden="true" />
                                     <div role="group" aria-label={item.label}>
                                         <p className="text-sm text-gray-400 font-medium">{item.label}</p>
                                         <p className="text-lg text-white font-semibold break-words">{item.text}</p>
                                     </div>
-                                </div>
+                                </a>
                             ))}
                         </div>
 
@@ -278,8 +296,8 @@ function Contact() {
                 <motion.button
                     onClick={scrollToTop}
                     className="fixed bottom-8 right-8 p-4 rounded-full 
-                    bg-gradient-to-r from-blue-500 to-green-400 
-                    text-white shadow-xl z-50 focus:outline-none focus:ring-4 focus:ring-green-400/50"
+                    bg-gradient-to-r from-blue-500 to-green-400 
+                    text-white shadow-xl z-50 focus:outline-none focus:ring-4 focus:ring-green-400/50"
                     aria-label="Scroll to top"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
