@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router";
 
 function RightSiteAbout() {
     return (
@@ -50,7 +51,9 @@ function RightSiteAbout() {
                        bg-gradient-to-r from-blue-500 to-purple-500 
                        hover:from-pink-500 hover:to-yellow-500
                        transition-all duration-500 shadow-lg hover:shadow-xl">
-                    DOWNLOAD CV
+                    <Link to="/CV">
+                        DOWNLOAD CV
+                    </Link>
                 </button>
             </motion.div>
         </div>

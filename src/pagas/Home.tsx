@@ -7,6 +7,8 @@ import Servics from "@/compounte/modils/home/Services/servics";
 import MineSiteSkill from "@/compounte/modils/home/skill/MineSiteSkill";
 
 
+
+
 function Home() {
     return (
         <>
@@ -17,6 +19,8 @@ function Home() {
             <Poject />
             <AboutMe />
             <Contact />
+
+
         </>
     )
 }

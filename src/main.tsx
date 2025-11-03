@@ -15,13 +15,15 @@ import './index.css'
 
 import About from '@/pagas/About';
 import Contact from '@/pagas/Contact';
-import Pages from '@/pagas/Pages';
-import Blog from '@/pagas/Blog';
+
 import Portfolio from '@/pagas/Portfolio';
 import Services from '@/pagas/Services';
 
 import { RouterProvider } from 'react-router';
 import Home from '@/pagas/Home.tsx';
+import CV from '@/pagas/CV.tsx';
+import Getcv from '@/pagas/GETcv.tsx';
+import HireMeSection from '@/pagas/HireMeSection.tsx';
 
 // import { ThemeProvider } from '@/compounte/povider/them-poider.tsx';
 
@@ -45,14 +47,7 @@ const router = createBrowserRouter([
         path: "contact",
         Component: Contact
       },
-      {
-        path: "pages",
-        Component: Pages
-      },
-      {
-        path: "blog",
-        Component: Blog,
-      },
+
       {
         path: "portfolio",
         Component: Portfolio
@@ -60,6 +55,19 @@ const router = createBrowserRouter([
       {
         path: "services",
         Component: Services
+      },
+      {
+        path: "CV",
+        Component: CV
+      },
+      {
+        path: "Getcv",
+        Component: Getcv
+      },
+
+      {
+        path: "HireMeSection",
+        Component: HireMeSection
       },
     ]
   },

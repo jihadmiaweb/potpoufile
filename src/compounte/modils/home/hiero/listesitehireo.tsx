@@ -1,6 +1,7 @@
 
 
 import { motion } from "framer-motion";
+import { Link } from "react-router";
 
 function ListHider() {
     return (
@@ -41,15 +42,19 @@ function ListHider() {
                     <button className="px-4 md:px-8 py-2 md:py-3 font-bold text-white rounded-lg 
                              bg-gradient-to-r from-pink-500 to-yellow-400 
                              transition-all duration-500 ease-in-out 
-                             hover:from-indigo-500 hover:to-pink-500">
-                        HIRE ME
+                             hover:from-indigo-500 cursor-pointer hover:to-pink-500">
+                        <Link to={"/HireMeSection"}>
+                            HIRE ME
+                        </Link>
                     </button>
 
                     <button className="px-4 md:px-8 py-2 md:py-3 font-semibold rounded-lg text-white 
-                             bg-gradient-to-r from-blue-400 to-green-500
+                             bg-gradient-to-r cursor-pointer from-blue-400 to-green-500
                              transition-all duration-500 
                              hover:from-green-500 hover:to-teal-400 shadow-lg">
-                        GET CV
+                        <Link to={"/Getcv"}>
+                            GET CV
+                        </Link>
                     </button>
                 </div>
             </motion.div>
