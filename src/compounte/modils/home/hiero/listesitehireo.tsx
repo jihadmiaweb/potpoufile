@@ -18,7 +18,7 @@ function ListHider() {
                 transition={{ duration: 0.8, ease: "easeOut" }}
                 viewport={{ once: true }}
             >
-                <h1 className="flex items-center px-4 md:px-6 py-2 text-2xl md:text-4xl font-extrabold 
+                <h1 className="flex items-center px-4 md:px-6 py-2 text-3xl md:text-4xl font-extrabold 
                        bg-gradient-to-r from-indigo-500 via-pink-500 to-yellow-400 
                        bg-clip-text text-transparent">
                     HELLO
@@ -26,12 +26,12 @@ function ListHider() {
                 </h1>
 
                 <div>
-                    <h2 className="pl-4 md:pl-6 pb-3 text-3xl md:text-5xl lg:text-6xl font-extrabold 
+                    <h2 className="pl-4 md:pl-6 pb-3 text-4xl md:text-5xl lg:text-6xl font-extrabold 
                          bg-gradient-to-r from-indigo-500 via-pink-500 to-yellow-400 
                          bg-clip-text text-transparent">
                         I AM JIHAD MIA
                     </h2>
-                    <span className="pl-4 md:pl-6 text-xl md:text-3xl lg:text-4xl font-extrabold 
+                    <span className="pl-4 md:pl-6 text-3xl md:text-3xl lg:text-4xl font-extrabold 
                            bg-gradient-to-r from-indigo-500 via-pink-500 to-yellow-400 
                            bg-clip-text text-transparent">
                         Frontend Developer
